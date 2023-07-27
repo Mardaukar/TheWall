@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>My Connections</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-signin" method="get" action="/wall">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">The Wall</button>
+            </form>
+            <form class="form-signin" method="get" action="/my_profile">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">My Profile</button>
+            </form>
+            <form class="form-signin" method="get" action="/search">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+            </form>
+            <form class="form-signin" method="post" action="/logout">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+            </form>
+        </div>
+        <div class="container">
+            <ul class="form-signin">
+                <h3>My received requests:</h3>
+                <span th:if="${requestingProfiles.isEmpty()}">You have no received requests</span>
+                <li th:each="profile : ${requestingProfiles}">
+                    <span th:text="${profile.name}">name</span>
+                    <span th:text="${profile.username}">username</span>
+                    <form method="get" action="/profile">
+                        <input type="hidden" name="targetProfileString" th:value="${profile.profileString}"/>
+                        <button type="submit">Visit Profile</button>
+                    </form>
+                    <form method="post" action="/accept">
+                        <input type="hidden" name="requestorUsername" th:value="${profile.username}"/>
+                        <input type="hidden" name="connectionsPage" th:value="true"/>
+                        <button type="submit">Accept</button>
+                    </form>
+                    <form method="post" action="/decline">
+                        <input type="hidden" name="requestorUsername" th:value="${profile.username}"/>
+                        <input type="hidden" name="connectionsPage" th:value="true"/>
+                        <button type="submit">Decline</button>
+                    </form>
+                </li>
+                <h3>My sent requests:</h3>
+                <span th:if="${requestedProfiles.isEmpty()}">You have no sent requests pending</span>
+                <li th:each="profile : ${requestedProfiles}">
+                    <span th:text="${profile.name}">name</span>
+                    <span th:text="${profile.username}">username</span>
+                    <form method="get" action="/profile">
+                        <input type="hidden" name="targetProfileString" th:value="${profile.profileString}"/>
+                        <button type="submit">Visit Profile</button>
+                    </form>
+                    <form method="post" action="/cancel">
+                        <input type="hidden" name="targetUsername" th:value="${profile.username}"/>
+                        <input type="hidden" name="connectionsPage" th:value="true"/>
+                        <button type="submit">Cancel Request</button>
+                    </form>
+                </li>
+                <h3>My connections:</h3>
+                <span th:if="${connectedProfiles.isEmpty()}">You don't have any connections yet</span>
+                <li th:each="profile : ${connectedProfiles}">
+                    <span th:text="${profile.name}">name</span>
+                    <span th:text="${profile.username}">username</span>
+                    <form method="get" action="/profile">
+                        <input type="hidden" name="targetProfileString" th:value="${profile.profileString}"/>
+                        <button type="submit">Visit Profile</button>
+                    </form>
+                    <form method="post" action="/remove">
+                        <input type="hidden" name="targetUsername" th:value="${profile.username}"/>
+                        <input type="hidden" name="connectionsPage" th:value="true"/>
+                        <button type="submit">Remove Connection</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

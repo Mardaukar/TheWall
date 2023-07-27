@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Register</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-signin" method="post" action="/register">
+                <span th:if="${username_exists == true}">This username is already taken</span>
+                <span th:if="${profilestring_exists == true}">This profile string is already taken</span>
+                <h2 class="form-signin-heading">Enter your details</h2>
+                <p>
+                    <label for="name" class="sr-only">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>
+                </p>
+                <p>
+                    <label for="username" class="sr-only">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                </p>
+                <p>
+                    <label for="profileString" class="sr-only">Profile String</label>
+                    <input type="text" id="profileString" name="profileString" class="form-control" placeholder="profileString" required autofocus>
+                </p>
+                <p>
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                </p>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            </form>
+            <form class="form-signin" method="get" action="/login">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Already have an account?</button>
+            </form>
+        </div>
+    </body>
+</html>
